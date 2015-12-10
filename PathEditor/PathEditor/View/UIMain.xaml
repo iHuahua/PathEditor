@@ -1,0 +1,65 @@
+﻿<metro:MetroWindow x:Class="Huahua.View.UIMain"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:local="clr-namespace:Huahua.View"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                   Title="Path Editor"
+                   Width="640"
+                   Height="480"
+                   ShowIconOnTitleBar="True"
+                   WindowStartupLocation="CenterScreen"
+                   mc:Ignorable="d">
+
+    <Window.Resources>
+        <DataTemplate x:Key="envUnit">
+            <ListBoxItem Background="Blue"
+                         DataContext="{Binding Tag}"
+                         Tag="{Binding}">
+                <Label Background="Red"
+                       Content="{Binding Name}"
+                       Tag="{Binding}" />
+            </ListBoxItem>
+        </DataTemplate>
+
+        <DataTemplate x:Key="envGroup">
+            <TabItem x:Name="ti_Group"
+                     Margin="0"
+                     Background="AliceBlue"
+                     Header="{Binding Target}">
+                <Grid Margin="0" Background="AliceBlue">
+                    <Label Margin="0" Content="123" />
+                    <!--<ListBox DataContext="{Binding}"
+                             ItemTemplate="{StaticResource envUnit}"
+                             ItemsSource="{Binding EnvUnits,
+                                                   Mode=TwoWay}"
+                             Tag="{Binding}" />-->
+                </Grid>
+            </TabItem>
+            <!--<TabItem Header="{Binding Target}">
+                <local:UIEnvGroup />
+            </TabItem>-->
+        </DataTemplate>
+    </Window.Resources>
+
+
+    <Grid x:Name="root">
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="Auto" />-->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--<Menu x:Name="mainMenu" Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Export" />
+            </MenuItem>
+        </Menu>-->
+
+        <TabControl x:Name="tb_Root"
+                    DataContext="{Binding Env}"
+                    ItemTemplate="{StaticResource envGroup}"
+                    ItemsSource="{Binding EnvGroups}" />
+
+    </Grid>
+</metro:MetroWindow>
