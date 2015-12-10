@@ -13,51 +13,23 @@
                    WindowStartupLocation="CenterScreen"
                    mc:Ignorable="d">
 
-    <Window.Resources>
-        <DataTemplate x:Key="envUnit">
-            <ListBoxItem Background="Blue"
-                         DataContext="{Binding Tag}"
-                         Tag="{Binding}">
-                <Label Background="Red"
-                       Content="{Binding Name}"
-                       Tag="{Binding}" />
-            </ListBoxItem>
-        </DataTemplate>
-
-        <DataTemplate x:Key="envGroup">
-            <TabItem x:Name="ti_Group"
-                     Margin="0"
-                     Background="AliceBlue"
-                     Header="{Binding Target}">
-                <Grid Margin="0" Background="AliceBlue">
-                    <Label Margin="0" Content="123" />
-                    <!--<ListBox DataContext="{Binding}"
-                             ItemTemplate="{StaticResource envUnit}"
-                             ItemsSource="{Binding EnvUnits,
-                                                   Mode=TwoWay}"
-                             Tag="{Binding}" />-->
-                </Grid>
-            </TabItem>
-            <!--<TabItem Header="{Binding Target}">
-                <local:UIEnvGroup />
-            </TabItem>-->
-        </DataTemplate>
-    </Window.Resources>
-
-
     <Grid x:Name="root">
         <Grid.RowDefinitions>
-            <!--<RowDefinition Height="Auto" />-->
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--<Menu x:Name="mainMenu" Grid.Row="0">
+        <Menu x:Name="mainMenu" Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Header="Export" />
+                <MenuItem Click="OnExport" Header="Load From File" />
+                <MenuItem Click="OnExport" Header="Load From System" />
+                <MenuItem Click="OnExport" Header="Save To File" />
+                <MenuItem Click="OnExport" Header="Save To System" />
             </MenuItem>
-        </Menu>-->
+        </Menu>
 
         <TabControl x:Name="tb_Root"
+                    Grid.Row="1"
                     DataContext="{Binding Env}"
                     ItemsSource="{Binding EnvGroups}"
                     SelectedIndex="0">

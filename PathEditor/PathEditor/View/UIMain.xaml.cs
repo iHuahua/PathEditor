@@ -15,7 +15,7 @@ namespace Huahua.View
     /// </summary>
     public partial class UIMain : MetroWindow
     {
-        private EnvVar env = EnvControl.GetSystemEnv();
+        private EnvVar env;
 
         public event PropertyChangedEventHandler PropertyChanged;
         
@@ -34,7 +34,6 @@ namespace Huahua.View
         {
             InitializeComponent();
             DataContext = this;
-            Env = EnvControl.GetSystemEnv();
         }
 
         public UIMain(string xmlPath)
@@ -42,8 +41,22 @@ namespace Huahua.View
         {
             if (!File.Exists(xmlPath))
                 return;
+            Env = EnvControl.GetSystemEnv();
         }
 
-        
+        private void OnRestore(object sender, RoutedEventArgs e)
+        {
+            EnvControl.SetSystemEnv(Env);
+        }
+
+        private void OnExport(object sender, RoutedEventArgs e)
+        {
+            EnvControl.SaveEnvXml("path.xml", Env);
+        }
+
+        private void OnExportSystem(object sender, RoutedEventArgs e)
+        {
+            EnvControl.SaveEnvXml("path.xml", EnvControl.GetSystemEnv());
+        }
     }
 }
