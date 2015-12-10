@@ -59,7 +59,8 @@
 
         <TabControl x:Name="tb_Root"
                     DataContext="{Binding Env}"
-                    ItemsSource="{Binding EnvGroups}">
+                    ItemsSource="{Binding EnvGroups}"
+                    SelectedIndex="0">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Foreground="Red" Text="{Binding Target}" />
