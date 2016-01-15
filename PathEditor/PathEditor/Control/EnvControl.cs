@@ -64,7 +64,6 @@ namespace Huahua.Control
                     }
                 }
             }
-
         }
 
         public static EnvVar LoadEnvXml(string fn)

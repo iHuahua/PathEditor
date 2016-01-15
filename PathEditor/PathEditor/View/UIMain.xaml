@@ -21,10 +21,11 @@
 
         <Menu x:Name="mainMenu" Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Click="OnExport" Header="Load From File" />
-                <MenuItem Click="OnExport" Header="Load From System" />
-                <MenuItem Click="OnExport" Header="Save To File" />
-                <MenuItem Click="OnExport" Header="Save To System" />
+                <MenuItem Click="OnLoadFromFile" Header="Load From File" />
+                <MenuItem Click="OnLoadFromSystem" Header="Load From System" />
+                <MenuItem Click="OnExportCurrent" Header="Save To File" />
+                <MenuItem Click="OnRestore" Header="Restore To System" />
+                <MenuItem Click="OnExportSystem" Header="Backup System" />
             </MenuItem>
         </Menu>
 

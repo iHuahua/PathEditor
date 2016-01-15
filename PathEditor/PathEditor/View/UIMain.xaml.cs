@@ -1,11 +1,9 @@
 ﻿using Huahua.Control;
 using Huahua.Model;
 using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Windows;
 
 namespace Huahua.View
@@ -18,7 +16,7 @@ namespace Huahua.View
         private EnvVar env;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public EnvVar Env
         {
             get { return env; }
@@ -34,6 +32,7 @@ namespace Huahua.View
         {
             InitializeComponent();
             DataContext = this;
+            LoadFromSystem();
         }
 
         public UIMain(string xmlPath)
@@ -41,22 +40,61 @@ namespace Huahua.View
         {
             if (!File.Exists(xmlPath))
                 return;
-            Env = EnvControl.GetSystemEnv();
+            else
+                LoadFromFile(xmlPath);
+        }
+
+        private void OnLoadFromFile(object sender, RoutedEventArgs e)
+        {
+            FileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "XML File|*.xml|All File|*.*";
+            dialog.DefaultExt = ".xml";
+            if (dialog.ShowDialog() == true)
+                LoadFromFile(dialog.FileName);
+        }
+
+        private void OnLoadFromSystem(object sender, RoutedEventArgs e)
+        {
+            LoadFromSystem();
         }
 
         private void OnRestore(object sender, RoutedEventArgs e)
         {
-            EnvControl.SetSystemEnv(Env);
+            RestoreToSystem();
         }
 
-        private void OnExport(object sender, RoutedEventArgs e)
+        private void OnExportCurrent(object sender, RoutedEventArgs e)
         {
-            EnvControl.SaveEnvXml("path.xml", Env);
+            FileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "XML File|*.xml|All File|*.*";
+            dialog.DefaultExt = ".xml";
+            if (dialog.ShowDialog() == true)
+                EnvControl.SaveEnvXml(dialog.FileName, Env);
         }
 
         private void OnExportSystem(object sender, RoutedEventArgs e)
         {
-            EnvControl.SaveEnvXml("path.xml", EnvControl.GetSystemEnv());
+            FileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "XML File|*.xml|All File|*.*";
+            dialog.DefaultExt = ".xml";
+            if (dialog.ShowDialog() == true)
+                EnvControl.SaveEnvXml(dialog.FileName, EnvControl.GetSystemEnv());
+        }
+
+        private void LoadFromFile(string filePath)
+        {
+            Env = EnvControl.LoadEnvXml(filePath);
+        }
+
+        private void LoadFromSystem()
+        {
+            Env = EnvControl.GetSystemEnv();
+        }
+
+        private void RestoreToSystem()
+        {
+            if (MessageBoxResult.Yes == MessageBox.Show("Save current Environment Variables to system ?\r\nIt could not be undo.\r\nPress 'Yes' to continue", "", MessageBoxButton.YesNo, MessageBoxImage.Question))
+                EnvControl.SetSystemEnv(Env);
         }
     }
 }
