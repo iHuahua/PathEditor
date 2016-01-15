@@ -67,7 +67,11 @@ namespace Huahua.Model
             string k = (string)kv.Key;
             string v = (string)kv.Value;
             Name = Name_ = k;
-            Paths.AddRange(v.Split(';'));
+            foreach (var item in v.Split(';'))
+            {
+                if (!string.IsNullOrEmpty(item))
+                    Paths.Add(item);
+            }
         }
 
         public string ToPathString()
